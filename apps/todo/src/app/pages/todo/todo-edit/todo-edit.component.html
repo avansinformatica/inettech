@@ -1,0 +1,83 @@
+<form
+  #todoEditForm="ngForm"
+  name="form"
+  (ngSubmit)="todoEditForm.form.valid && onSubmit()"
+  novalidate
+>
+  <!-- ToDo title -->
+  <div class="row py-2">
+    <div class="col">
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="title">ToDo</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="newTodo!.title"
+          name="title"
+          #title="ngModel"
+          [ngClass]="{
+            'is-invalid': title.invalid && title.touched,
+            'is-valid': title.valid
+          }"
+          required
+          minlength="3"
+        />
+        <div *ngIf="title.invalid && title.touched" class="invalid-feedback">
+          <div *ngIf="title.errors?.['required']">ToDo title is vereist.</div>
+          <div *ngIf="title.errors?.['minlength']">
+            ToDo title moet ten minste 3 letters lang zijn.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ToDo isActive -->
+  <div class="form-group row py-2">
+    <div class="col-sm-10">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="isActive"
+          name="ToDoIsActive"
+          [(ngModel)]="newTodo!.completed"
+          #ToDoIsActive="ngModel"
+          value="false"
+        />
+        <label class="form-check-label" for="isActive">
+          ToDo is complete
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="row py-3">
+    <div class="col">
+      <div class="form-row">
+        <div class="col-auto py-2">
+          <button
+            type="submit"
+            class="btn btn-success mx-2"
+            [disabled]="!todoEditForm.valid"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-warning mx-2"
+            routerLink=".."
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <pre
+    >{{ newTodo | json }}
+</pre
+  >
+</form>
